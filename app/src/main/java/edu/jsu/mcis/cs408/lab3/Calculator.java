@@ -11,7 +11,8 @@ public class Calculator {
     private BigDecimal rightValue;
     private double leftDouble;
     private BigDecimal result;
-    private String previousOp;
+    private String op;
+    private Boolean secondOp;
     private StringBuilder inputBuffer = new StringBuilder();
     private StringBuilder displayBuffer = new StringBuilder();
 
@@ -28,7 +29,9 @@ public class Calculator {
         }
 
         if (button.equals(parent.getResources().getString(R.string._1))) {
+
             inputBuffer.append("1");
+            displayBuffer.append("1");
 
 
 
@@ -36,124 +39,165 @@ public class Calculator {
 
         if (button.equals(parent.getResources().getString(R.string._2))) {
             inputBuffer.append("2");
+            displayBuffer.append("2");
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._3))) {
             inputBuffer.append("3");
+            displayBuffer.append("3");
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._4))) {
             inputBuffer.append("4");
+            displayBuffer.append("4");
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._5))) {
             inputBuffer.append("5");
+            displayBuffer.append("5");
+
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._6))) {
             inputBuffer.append("6");
+            displayBuffer.append("6");
+
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._7))) {
             inputBuffer.append("7");
+            displayBuffer.append("7");
+
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._8))) {
             inputBuffer.append("8");
+            displayBuffer.append("8");
+
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._9))) {
             inputBuffer.append("9");
+            displayBuffer.append("9");
+
 
         }
 
         if (button.equals(parent.getResources().getString(R.string._0))) {
             inputBuffer.append("0");
+            displayBuffer.append("0");
+
 
         }
 
         if (button.equals(parent.getResources().getString(R.string.Decimal))) {
             if (!inputBuffer.toString().contains(".")) {
                 inputBuffer.append(".");
+                displayBuffer.append(".");
+
 
             }
         }
         if (button.equals(parent.getResources().getString(R.string.Addition))) {
             displayBuffer = new StringBuilder();
             if (leftValue == null && !inputBuffer.toString().isEmpty()) {
+                op=button;
                 leftValue = new BigDecimal(inputBuffer.toString());
+                secondOp=true;
                 inputBuffer = new StringBuilder();
-
             }
-            else if (leftValue != null && !inputBuffer.toString().isEmpty()) {
+            else if (secondOp == true) {
                 rightValue = new BigDecimal(inputBuffer.toString());
-                leftValue = leftValue.add(rightValue);
-                rightValue = new BigDecimal("0");
-                displayBuffer.append(leftValue);
+                result=this.solution();
                 inputBuffer = new StringBuilder();
+                leftValue=result;
+                rightValue = new BigDecimal("0");
+                op=button;
+                displayBuffer.append(leftValue);
+
             }
         }
         if (button.equals(parent.getResources().getString(R.string.Subtraction))) {
             displayBuffer = new StringBuilder();
             if (leftValue == null && !inputBuffer.toString().isEmpty()) {
+                op=button;
                 leftValue = new BigDecimal(inputBuffer.toString());
+                secondOp=true;
                 inputBuffer = new StringBuilder();
             }
-            else if (leftValue != null && !inputBuffer.toString().isEmpty()) {
+            else if (secondOp == true) {
                 rightValue = new BigDecimal(inputBuffer.toString());
-                leftValue = leftValue.subtract(rightValue);
-                rightValue = new BigDecimal("0");
-                displayBuffer.append(leftValue);
+                result=this.solution();
                 inputBuffer = new StringBuilder();
+                leftValue=result;
+                rightValue = new BigDecimal("0");
+                op=button;
+                displayBuffer.append(leftValue);
+
             }
         }
         if (button.equals(parent.getResources().getString(R.string.multiplication))) {
             displayBuffer = new StringBuilder();
             if (leftValue == null && !inputBuffer.toString().isEmpty()) {
+                op=button;
                 leftValue = new BigDecimal(inputBuffer.toString());
+                secondOp=true;
                 inputBuffer = new StringBuilder();
             }
-            else if (leftValue != null && !inputBuffer.toString().isEmpty()) {
+            else if (secondOp == true) {
                 rightValue = new BigDecimal(inputBuffer.toString());
-                leftValue = leftValue.multiply(rightValue);
-                rightValue = new BigDecimal("0");
-                displayBuffer.append(leftValue);
+                result=this.solution();
                 inputBuffer = new StringBuilder();
+                leftValue=result;
+                rightValue = new BigDecimal("0");
+                op=button;
+                displayBuffer.append(leftValue);
+
             }
         }
         if (button.equals(parent.getResources().getString(R.string.division))) {
             displayBuffer = new StringBuilder();
             if (leftValue == null && !inputBuffer.toString().isEmpty()) {
+                op=button;
                 leftValue = new BigDecimal(inputBuffer.toString());
+                secondOp=true;
                 inputBuffer = new StringBuilder();
             }
-            else if (leftValue != null && !inputBuffer.toString().isEmpty()) {
+            else if (secondOp == true) {
                 rightValue = new BigDecimal(inputBuffer.toString());
-                leftValue = leftValue.divide(rightValue);
-                rightValue = new BigDecimal("0");
-                displayBuffer.append(leftValue);
+                result=this.solution();
                 inputBuffer = new StringBuilder();
+                leftValue=result;
+                rightValue = new BigDecimal("0");
+                op=button;
+                displayBuffer.append(leftValue);
+
             }
         }
         if (button.equals(parent.getResources().getString(R.string.Modulus))) {
             displayBuffer = new StringBuilder();
             if (leftValue == null && !inputBuffer.toString().isEmpty()) {
+                op=button;
                 leftValue = new BigDecimal(inputBuffer.toString());
+                secondOp=true;
                 inputBuffer = new StringBuilder();
             }
-            else if (leftValue != null && !inputBuffer.toString().isEmpty()) {
+            else if (secondOp == true) {
                 rightValue = new BigDecimal(inputBuffer.toString());
-                leftValue = leftValue.remainder(rightValue);
-                rightValue = new BigDecimal("0");
-                displayBuffer.append(leftValue);
+                result=this.solution();
                 inputBuffer = new StringBuilder();
+                leftValue=result;
+                rightValue = new BigDecimal("0");
+                op=button;
+                displayBuffer.append(leftValue);
+
             }
         }
         if (button.equals(parent.getResources().getString(R.string.Sqrt))) {
@@ -166,13 +210,55 @@ public class Calculator {
                 displayBuffer.append(leftValue);
                 inputBuffer = new StringBuilder();
             }
+        }
+        if (button.equals(parent.getResources().getString(R.string.plusminus))){
+            displayBuffer = new StringBuilder();
+            if (leftValue == null && !inputBuffer.toString().isEmpty()) {
+                leftValue = new BigDecimal(inputBuffer.toString());
+                leftValue = leftValue.negate();
+                displayBuffer.append(leftValue);
+                inputBuffer = new StringBuilder();
+            }
+            else if (leftValue != null && !inputBuffer.toString().isEmpty()) {
+                displayBuffer = new StringBuilder();
+                rightValue = rightValue.negate();
+                displayBuffer.append(rightValue);
 
+            }
 
         }
         if (button.equals(parent.getResources().getString(R.string.Equals))) {
+            rightValue = new BigDecimal(inputBuffer.toString());
+            result = this.solution();
+            displayBuffer = new StringBuilder(result.toString());
+            inputBuffer = new StringBuilder();
+            leftValue = null;
+            rightValue = null;
+            secondOp = false;
 
         }
     }
+
+    public BigDecimal solution(){
+        if (op.equals(parent.getResources().getString(R.string.division))) {
+            return leftValue.divide(rightValue);
+        }
+        else if (op.equals(parent.getResources().getString(R.string.Modulus))) {
+            return leftValue.remainder(rightValue);
+        }
+        else if (op.equals(parent.getResources().getString(R.string.multiplication))) {
+            return leftValue.multiply(rightValue);
+        }
+        else if (op.equals(parent.getResources().getString(R.string.Subtraction))) {
+            return leftValue.subtract(rightValue);
+        }
+        else if (op.equals(parent.getResources().getString(R.string.Addition))){
+            return leftValue.add(rightValue);
+        }
+
+        return null;
+    }
+
     public String getDisplay() {
         return displayBuffer.toString();
     }
