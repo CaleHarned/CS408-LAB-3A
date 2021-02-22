@@ -120,7 +120,8 @@ public class Calculator {
                 leftValue=result;
                 rightValue = new BigDecimal("0");
                 op=button;
-                displayBuffer.append(leftValue);
+                displayBuffer= new StringBuilder();
+
 
             }
         }
@@ -139,7 +140,8 @@ public class Calculator {
                 leftValue=result;
                 rightValue = new BigDecimal("0");
                 op=button;
-                displayBuffer.append(leftValue);
+                displayBuffer= new StringBuilder();
+
 
             }
         }
@@ -157,8 +159,9 @@ public class Calculator {
                 inputBuffer = new StringBuilder();
                 leftValue=result;
                 rightValue = new BigDecimal("0");
+                displayBuffer= new StringBuilder();
                 op=button;
-                displayBuffer.append(leftValue);
+
 
             }
         }
@@ -177,7 +180,8 @@ public class Calculator {
                 leftValue=result;
                 rightValue = new BigDecimal("0");
                 op=button;
-                displayBuffer.append(leftValue);
+                displayBuffer= new StringBuilder();
+
 
             }
         }
@@ -189,7 +193,7 @@ public class Calculator {
                 secondOp=true;
                 inputBuffer = new StringBuilder();
             }
-            else if (secondOp == true) {
+            else if (secondOp == true || (leftValue != null && !inputBuffer.toString().isEmpty())) {
                 rightValue = new BigDecimal(inputBuffer.toString());
                 result=this.solution();
                 inputBuffer = new StringBuilder();
@@ -212,28 +216,24 @@ public class Calculator {
             }
         }
         if (button.equals(parent.getResources().getString(R.string.plusminus))){
-            displayBuffer = new StringBuilder();
-            if (leftValue == null && !inputBuffer.toString().isEmpty()) {
-                leftValue = new BigDecimal(inputBuffer.toString());
-                leftValue = leftValue.negate();
-                displayBuffer.append(leftValue);
-                inputBuffer = new StringBuilder();
-            }
-            else if (leftValue != null && !inputBuffer.toString().isEmpty()) {
-                displayBuffer = new StringBuilder();
-                rightValue = rightValue.negate();
-                displayBuffer.append(rightValue);
+                if (!inputBuffer.toString().contains("-")) {
+                    inputBuffer.replace(0, inputBuffer.length(), "-" + inputBuffer.toString());
+                    displayBuffer = new StringBuilder(inputBuffer);
+                } else {
+                    inputBuffer.replace(0, inputBuffer.length(), inputBuffer.toString().replace("-", ""));
+                    displayBuffer = new StringBuilder(inputBuffer);
 
+                }
             }
 
-        }
+
+
         if (button.equals(parent.getResources().getString(R.string.Equals))) {
             rightValue = new BigDecimal(inputBuffer.toString());
             result = this.solution();
             displayBuffer = new StringBuilder(result.toString());
             inputBuffer = new StringBuilder();
-            leftValue = null;
-            rightValue = null;
+            rightValue = new BigDecimal(0);
             secondOp = false;
 
         }
